@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "2025-06-draft",
+  "name": "eqvps",
+  "title": "EQVPS",
+  "description": "Crypto-paid, no-KYC VPS hosting that AI agents can rent and operate end-to-end over MCP: discover plans, create an account, top up with USDC/USDT, order a VPS, then control it (power, hostname, reinstall, metrics).",
+  "version": "1.0.0",
+  "vendor": {
+    "name": "EQVPS",
+    "url": "https://eqvps.com"
+  },
+  "documentation": "https://eqvps.com/docs",
+  "endpoint": "https://mcp.eqvps.com/mcp",
+  "transport": "streamable-http",
+  "authentication": {
+    "type": "http-bearer",
+    "description": "Most tools require a Bearer token. Agents obtain one autonomously via the register_account tool (or login) and send it as Authorization: Bearer <token>. Catalog tools (list_plans) are public.",
+    "tokenAcquisition": "tool:register_account"
+  },
+  "capabilities": {
+    "tools": true
+  },
+  "tools": [
+    {
+      "name": "list_plans",
+      "description": "List available VPS plans with pricing, specs and OS images.",
+      "requiresAuth": false
+    },
+    {
+      "name": "register_account",
+      "description": "Create an EQVPS account (no human/KYC step). Returns a Bearer token.",
+      "requiresAuth": false
+    },
+    {
+      "name": "login",
+      "description": "Log in with email + password; returns a Bearer token.",
+      "requiresAuth": false
+    },
+    {
+      "name": "whoami",
+      "description": "Return the authenticated account profile.",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_balance",
+      "description": "Return prepaid credit balance and currency.",
+      "requiresAuth": true
+    },
+    {
+      "name": "topup_balance",
+      "description": "Create a crypto top-up invoice; returns a PayRam checkout URL.",
+      "requiresAuth": true
+    },
+    {
+      "name": "order_vps",
+      "description": "Order a VPS by plan slug + OS id (pays from prepaid balance).",
+      "requiresAuth": true
+    },
+    {
+      "name": "pay_invoice",
+      "description": "Initiate crypto payment for an owned unpaid invoice; returns checkout URL.",
+      "requiresAuth": true
+    },
+    {
+      "name": "list_vps",
+      "description": "List the account's VPS services (id, status, plan).",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_vps_status",
+      "description": "Full detail for one VPS: status, specs, live VM state/uptime, SSH access.",
+      "requiresAuth": true
+    },
+    {
+      "name": "power_vps",
+      "description": "Power-control a VPS: start, stop or reboot.",
+      "requiresAuth": true
+    },
+    {
+      "name": "set_hostname",
+      "description": "Set the VPS hostname (DNS label; applied on reboot/rebuild).",
+      "requiresAuth": true
+    },
+    {
+      "name": "reset_password",
+      "description": "Reset the VPS root password.",
+      "requiresAuth": true
+    },
+    {
+      "name": "reinstall_vps",
+      "description": "DESTRUCTIVE: wipe and reinstall the VPS with a given OS image.",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_vps_metrics",
+      "description": "Time-series resource metrics (CPU, memory, network, disk) for a VPS.",
+      "requiresAuth": true
+    }
+  ],
+  "x-eqvps": {
+    "restApi": "https://api.eqvps.com/api/v1/eqvps",
+    "payment": "crypto USDC/USDT on Base, Ethereum, Polygon + USDT on Tron, via PayRam — no KYC",
+    "humanUi": "https://eqvps.com",
+    "noKyc": true
+  }
+}
