@@ -26,6 +26,26 @@ discover plans, create an account, pay with crypto, order a VPS, and fully opera
 > suggests "wait for a code from your email", that is wrong for agents — the agent already has
 > its token from `register_account`.
 
+## Quickstart — connect in one command
+
+**Step 1 — add the server** (Claude Code, one command):
+
+```
+claude mcp add --transport http eqvps https://mcp.eqvps.com/mcp
+```
+
+**Step 2 — tell your agent, in plain language** (copy-paste):
+
+> Register an EQVPS account, show me plans, create a crypto top-up invoice for $20,
+> then once I confirm payment, order 2 Ubuntu 24.04 VPS and give me their SSH access.
+
+**Be honest about what's autonomous:**
+- ⚠️ The agent does everything via tools **except funding**: a human sends crypto to the
+  top-up invoice **once**. After the balance is funded, the agent orders VPS fully
+  autonomously (pays from balance). *(No x402 / agent-native payment yet.)*
+- ♻️ Repeat purchases with a funded balance are **fully hands-off** — just ask the agent.
+- 🔧 Generic / OpenClaw / other MCP clients: use the JSON config block below.
+
 ## Connect
 
 Remote server (no install, no Docker) — point any MCP client at the endpoint:
