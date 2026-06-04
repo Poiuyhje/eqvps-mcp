@@ -11,10 +11,20 @@ discover plans, create an account, pay with crypto, order a VPS, and fully opera
 - 💸 **Payment:** crypto only — USDC/USDT on Base, Ethereum, Polygon + USDT on Tron (via PayRam). No KYC.
 
 > This is a **hosted, commercial remote MCP server** — not a no-auth public toy. Most tools
-> require a Bearer token tied to a customer account with a prepaid crypto balance. An agent
-> obtains a token autonomously via the `register_account` tool (no human signup), then sends
-> it as `Authorization: Bearer <token>`. Provisioning a VPS spends prepaid balance funded with
-> `topup_balance`. Catalog tools (`list_plans`) are public.
+> require a Bearer token tied to a customer account with a prepaid crypto balance. Provisioning
+> a VPS spends prepaid balance funded with `topup_balance`. Catalog tools (`list_plans`) are public.
+
+## Authentication paths (do not mix)
+
+- **AI AGENTS (this MCP):** call **`register_account`** — the agent itself supplies credentials
+  and gets a **Bearer token immediately**. **No email, no OTP code, no human step.** This is the
+  path for autonomous agents. Send the token as `Authorization: Bearer <token>`.
+- **HUMANS (website [eqvps.com](https://eqvps.com)):** passwordless **email OTP code** — for
+  people in a browser only. **Agents cannot use this** (they cannot read email).
+
+> **An MCP agent must use `register_account`, never the email-OTP human flow.** If a model
+> suggests "wait for a code from your email", that is wrong for agents — the agent already has
+> its token from `register_account`.
 
 ## Connect
 

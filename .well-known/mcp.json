@@ -13,8 +13,10 @@
   "transport": "streamable-http",
   "authentication": {
     "type": "http-bearer",
-    "description": "Most tools require a Bearer token. Agents obtain one autonomously via the register_account tool (or login) and send it as Authorization: Bearer <token>. Catalog tools (list_plans) are public.",
-    "tokenAcquisition": "tool:register_account"
+    "description": "AI AGENTS (this MCP): call the register_account tool — the agent supplies its own credentials and receives a Bearer token immediately (no email, no OTP code, no human step). Send it as Authorization: Bearer <token>. Do NOT use the website email-OTP flow; that path is for humans in a browser only and an agent cannot complete it (cannot read email). Catalog tools (list_plans) are public.",
+    "tokenAcquisition": "tool:register_account (agents get a Bearer token instantly — NOT the human email-OTP flow)",
+    "x-agentAuth": "register_account tool -> Bearer token, immediate, no email/OTP/human step",
+    "x-humanAuth": "website eqvps.com only: passwordless email OTP code, not usable by agents"
   },
   "capabilities": {
     "tools": true
