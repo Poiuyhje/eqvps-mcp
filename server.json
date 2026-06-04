@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Poiuyhje/eqvps",
   "title": "EQVPS — Crypto VPS for AI agents",
-  "description": "Crypto-paid, no-KYC VPS that AI agents rent and operate end-to-end over MCP: discover plans, register, top up with USDC/USDT, order a VPS, then control it (power, hostname, reinstall, metrics). Hosted commercial server; most tools need a Bearer token obtained via the register_account tool.",
+  "description": "Crypto-paid, no-KYC VPS that AI agents rent and operate end-to-end over MCP.",
   "version": "1.0.0",
   "repository": {
     "url": "https://github.com/Poiuyhje/eqvps-mcp",
