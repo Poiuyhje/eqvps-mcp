@@ -1,14 +1,14 @@
 # EQVPS — MCP Server
 
-**Crypto-native VPS hosting that AI agents can rent and run by themselves.** EQVPS exposes a
+**API-native, pay-per-use VPS hosting that AI agents can rent and run by themselves.** EQVPS exposes a
 [Model Context Protocol](https://modelcontextprotocol.io) server so an autonomous agent can
 discover plans, create an account, pay with crypto, order a VPS, and fully operate it —
-**no human, no KYC, no card.**
+**no human in the loop — agents provision programmatically.**
 
 - 🌐 **Website:** https://eqvps.com
 - 📚 **Docs (REST + MCP):** https://eqvps.com/docs
 - 🔌 **MCP endpoint:** `https://mcp.eqvps.com/mcp` (transport: **streamable-http**)
-- 💸 **Payment:** crypto only — USDC/USDT on Base, Ethereum, Polygon + USDT on Tron (via PayRam). No KYC.
+- 💸 **Payment:** crypto only — USDC/USDT on Base + Ethereum, USDT on Tron (via PayRam).
 
 > This is a **hosted, commercial remote MCP server** — not a no-auth public toy. Most tools
 > require a Bearer token tied to a customer account with a prepaid crypto balance. Provisioning
@@ -69,7 +69,7 @@ live at https://eqvps.com/.well-known/mcp.json
 | Tool | Auth | Description |
 |------|------|-------------|
 | `list_plans` | public | List available VPS plans with pricing, specs and OS images. |
-| `register_account` | public | Create an EQVPS account (no human/KYC step). Returns a Bearer token. |
+| `register_account` | public | Create an EQVPS account (programmatic signup, no human in the loop). Returns a Bearer token. |
 | `login` | public | Log in with email + password; returns a Bearer token. |
 | `whoami` | bearer | Return the authenticated account profile. |
 | `get_balance` | bearer | Return prepaid credit balance and currency. |
@@ -91,7 +91,7 @@ live at https://eqvps.com/.well-known/mcp.json
 
 ## About
 
-EQVPS is crypto-native VPS hosting for humans **and** AI agents. NVMe, full root, instant deploy.
+EQVPS is API-native, pay-per-use VPS hosting for humans **and** AI agents. NVMe, full root, instant deploy.
 The MCP server is a thin, hosted gateway to the EQVPS REST API — this repository is the public
 listing/manifest only; no server code or credentials are published here.
 
