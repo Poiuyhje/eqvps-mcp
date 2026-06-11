@@ -1,6 +1,6 @@
 # EQVPS — MCP Server
 
-**API-native, pay-per-use VPS hosting that AI agents can rent and run by themselves.** EQVPS exposes a
+**API-native, pay-per-use, no-KYC VPS hosting that AI agents can rent and run by themselves.** EQVPS exposes a
 [Model Context Protocol](https://modelcontextprotocol.io) server so an autonomous agent can
 discover plans, create an account, pay with crypto, order a VPS, and fully operate it —
 **no human in the loop — agents provision programmatically.**
@@ -8,7 +8,8 @@ discover plans, create an account, pay with crypto, order a VPS, and fully opera
 - 🌐 **Website:** https://eqvps.com
 - 📚 **Docs (REST + MCP):** https://eqvps.com/docs
 - 🔌 **MCP endpoint:** `https://mcp.eqvps.com/mcp` (transport: **streamable-http**)
-- 💸 **Payment:** crypto only — USDC/USDT on Base + Ethereum, USDT on Tron (via PayRam).
+- 💸 **Payment:** crypto only — USDC/USDT on Base + Ethereum, USDT on Tron (via PayRam). **No KYC.**
+- 📝 **Blog (guides):** https://eqvps.com/blog
 
 > This is a **hosted, commercial remote MCP server** — not a no-auth public toy. Most tools
 > require a Bearer token tied to a customer account with a prepaid crypto balance. Provisioning
@@ -64,7 +65,7 @@ Remote server (no install, no Docker) — point any MCP client at the endpoint:
 Machine-readable manifest: [`/.well-known/mcp.json`](./.well-known/mcp.json) ·
 live at https://eqvps.com/.well-known/mcp.json
 
-## Tools (15)
+## Tools (16)
 
 | Tool | Auth | Description |
 |------|------|-------------|
@@ -82,12 +83,13 @@ live at https://eqvps.com/.well-known/mcp.json
 | `set_hostname` | bearer | Set the VPS hostname (DNS label; applied on reboot/rebuild). |
 | `reset_password` | bearer | Reset the VPS root password. |
 | `reinstall_vps` | bearer | **Destructive:** wipe and reinstall the VPS with a given OS image. |
+| `cancel_service` | bearer | Cancel a VPS: `end_of_period` (safe, default — runs until the paid period ends, then not renewed) or `immediate` (destroys VM + all data, requires confirm=hostname). |
 | `get_vps_metrics` | bearer | Time-series resource metrics (CPU, memory, network, disk) for a VPS. |
 
 ## Typical agent flow
 
 `list_plans` → `register_account` → `topup_balance` (pay crypto) → `order_vps` →
-`get_vps_status` (SSH access) → operate (`power_vps`, `set_hostname`, `reinstall_vps`, `get_vps_metrics`).
+`get_vps_status` (SSH access) → operate (`power_vps`, `set_hostname`, `reinstall_vps`, `get_vps_metrics`, `cancel_service`).
 
 ## About
 
