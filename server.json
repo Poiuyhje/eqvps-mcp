@@ -1,9 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Poiuyhje/eqvps",
-  "title": "EQVPS — pay-per-use VPS for AI agents (API + MCP)",
-  "description": "VPS that AI agents rent and operate over MCP: list plans, order, power, reinstall, cancel.",
-  "version": "1.0.1",
+  "description": "Crypto-paid no-KYC VPS that AI agents rent & operate over MCP — order, pay USDC/USDT, get root.",
+  "version": "1.0.2",
   "repository": {
     "url": "https://github.com/Poiuyhje/eqvps-mcp",
     "source": "github"
