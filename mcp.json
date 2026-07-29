@@ -100,7 +100,7 @@
   ],
   "x-eqvps": {
     "restApi": "https://api.eqvps.com/api/v1/eqvps",
-    "payment": "crypto USDC/USDT on Base, Ethereum, Polygon + USDT on Tron, via PayRam — no KYC",
+    "payment": "crypto USDC & USDT on Base and Ethereum, via PayRam — no KYC",
     "humanUi": "https://eqvps.com",
     "noKyc": true
   }
