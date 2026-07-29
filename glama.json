@@ -1,0 +1,6 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": ["Poiuyhje"],
+  "description": "No-KYC crypto-paid VPS hosting that AI agents rent and operate over MCP: discover plans, register, pay USDC/USDT, provision, and fully control a VPS — no human, no card, no KYC.",
+  "categories": ["cloud-platforms", "virtualization", "devops"]
+}
