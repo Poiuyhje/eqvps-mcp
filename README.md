@@ -5,7 +5,7 @@
 - 🌐 **Website:** https://eqvps.com
 - 📚 **Docs (REST + MCP):** https://eqvps.com/docs
 - 🔌 **MCP endpoint:** `https://mcp.eqvps.com/mcp` (transport: **streamable-http**)
-- 💸 **Payment:** crypto only — **USDC and USDT** on **Base** and **Ethereum**, via a self-hosted non-custodial gateway (PayRam). **No KYC.**
+- 💸 **Payment:** crypto only — **USDC and USDT** on **Base**, **Ethereum** and **Polygon**, via a self-hosted non-custodial gateway (PayRam). **No KYC.**
 - 📝 **Blog (guides):** https://eqvps.com/blog
 
 > This is a **hosted, commercial remote MCP server**. Most tools require a Bearer token tied to a customer account with a prepaid crypto balance. Provisioning a VPS spends prepaid balance funded with `topup_balance`. Catalog tools (`list_plans`) are public.
@@ -102,7 +102,7 @@ Point `EQVPS_MCP_URL` at a different endpoint if needed. The example uses only t
 
 ## About
 
-EQVPS is API-native, pay-per-use VPS hosting for humans **and** AI agents. NVMe storage, full root, instant deploy, EU nodes. Crypto payment (USDC/USDT on Base and Ethereum), no KYC. Registered in the [Official MCP Registry](https://registry.modelcontextprotocol.io) as `io.github.Poiuyhje/eqvps`.
+EQVPS is API-native, pay-per-use VPS hosting for humans **and** AI agents. NVMe storage, full root, instant deploy, EU nodes. Crypto payment (USDC/USDT on Base, Ethereum and Polygon), no KYC. Registered in the [Official MCP Registry](https://registry.modelcontextprotocol.io) as `io.github.Poiuyhje/eqvps`.
 
 ## License
 
