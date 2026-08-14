@@ -9,7 +9,7 @@
     "example": "node examples/connect.mjs"
   },
   "keywords": ["mcp", "model-context-protocol", "vps", "hosting", "ai-agents", "no-kyc", "crypto", "usdc", "usdt", "devops", "cloud"],
-  "author": "EQVPS <admin@airnet.od.ua> (https://eqvps.com)",
+  "author": "EQVPS <info@eqvps.com> (https://eqvps.com)",
   "license": "MIT",
   "homepage": "https://eqvps.com",
   "repository": { "type": "git", "url": "git+https://github.com/Poiuyhje/eqvps-mcp.git" },
