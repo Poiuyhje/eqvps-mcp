@@ -5,7 +5,8 @@
 - 🌐 **Website:** https://eqvps.com
 - 📚 **Docs (REST + MCP):** https://eqvps.com/docs
 - 🔌 **MCP endpoint:** `https://mcp.eqvps.com/mcp` (transport: **streamable-http**)
-- 💸 **Payment:** crypto only — **USDC and USDT** on **Base**, **Ethereum** and **Polygon**, via a self-hosted non-custodial gateway (PayRam). **No KYC.**
+- 💸 **Payment:** crypto only — **USDC, USDT and PYUSD** on **Base**, **Ethereum**, **Polygon** and **Solana** (prepaid balance, non-custodial gateway). **No KYC.**
+- 🧰 **52 MCP tools** on one endpoint, role-filtered by token: **27 for customers** + **25 for white-label resellers**.
 - 📝 **Blog (guides):** https://eqvps.com/blog
 
 > This is a **hosted, commercial remote MCP server**. Most tools require a Bearer token tied to a customer account with a prepaid crypto balance. Provisioning a VPS spends prepaid balance funded with `topup_balance`. Catalog tools (`list_plans`) are public.
@@ -14,11 +15,13 @@
 
 An AI agent can complete the entire VPS lifecycle on its own — no dashboard, no card, no identity check:
 
-1. **Discover** — `list_plans` (public) returns plans, specs, prices, OS images.
+1. **Discover** — `list_plans` (public) returns plans, specs, prices, OS images (14 Linux images).
 2. **Sign up** — `register_account` gives the agent a Bearer token instantly (no email, no OTP, no human step).
-3. **Fund** — `topup_balance` returns a crypto checkout URL; pay in USDC/USDT to load a prepaid balance.
-4. **Provision** — `order_vps` creates a VPS from the balance; `get_vps_status` returns live state and SSH access.
-5. **Operate** — power, hostname, root-password reset, reinstall, metrics, cancel — all over MCP.
+3. **Fund** — `topup_balance` returns a crypto checkout URL; pay in USDC/USDT/PYUSD to load a prepaid balance.
+4. **Provision** — `order_vps` creates a VPS from the balance; `get_vps_status` returns live state and SSH access (root in ~60s).
+5. **Operate** — power, hostname, root-password, reinstall, metrics, tickets, delegation, cancel — all over MCP.
+
+Plans range from **$3/mo** (Nano, NAT) to **$90/mo** (Pro-80: 80 GB RAM, dedicated IPv4). EU nodes (Germany, Finland).
 
 ## Authentication (two paths — do not mix)
 
@@ -56,7 +59,11 @@ Remote server — no install, no Docker. Point any MCP client at the endpoint ab
 
 - The agent does everything via tools **except funding**: a human sends crypto to the top-up invoice once. After the balance is funded, repeat orders are fully hands-off.
 
-## Tools (21)
+## Tools (52)
+
+One endpoint, **role-filtered by token**: a customer Bearer token exposes the **27 customer tools**; a reseller token (`rk_…`, issued in the EQVPS Partners cabinet) exposes the **25 white-label reseller tools**.
+
+### Customer tools (27)
 
 | Tool | Auth | Description |
 |------|------|-------------|
@@ -72,15 +79,27 @@ Remote server — no install, no Docker. Point any MCP client at the endpoint ab
 | `get_vps_status` | bearer | Full detail for one VPS: status, specs, live VM state/uptime, SSH access. |
 | `power_vps` | bearer | Power-control a VPS: start, stop or reboot. |
 | `set_hostname` | bearer | Set the VPS hostname (DNS label; applied on reboot/rebuild). |
-| `reset_password` | bearer | Reset the VPS root password. |
+| `reset_password` | bearer | Reset the VPS root password (rotates to a new one). |
+| `set_password` | bearer | Set a specific root password of your choice on the VPS. |
 | `reinstall_vps` | bearer | **Destructive:** wipe and reinstall the VPS with a given OS image. |
-| `cancel_service` | bearer | Cancel a VPS: `end_of_period` (safe default — runs until the paid period ends) or `immediate` (destroys VM + data, requires confirm=hostname). |
+| `cancel_service` | bearer | Cancel a VPS: `end_of_period` (safe default) or `immediate` (destroys VM + data, requires confirm=hostname). |
 | `get_vps_metrics` | bearer | Time-series resource metrics (CPU, memory, network, disk) for a VPS. |
-| `delegate_service` | bearer | Grant OPERATOR access to one of your VPS to another person by email (power/reinstall/console/hostname/rDNS, but not billing). Sends an invite; optional time limit. Owner-only. |
-| `accept_delegation` | public | Accept a delegation invite using the `token` from the invite link. Returns a Bearer token for the delegated account. |
-| `list_delegations` | bearer | List outgoing delegations you granted — who has operator access to what, and its status. |
-| `list_delegated_to_me` | bearer | List services other owners delegated operator access to you. |
-| `revoke_delegation` | bearer | Revoke a delegation by id (owner revokes, or delegate declines). The other side is notified. |
+| `delegate_service` | bearer | Grant OPERATOR access to one of your VPS to another person by email (power/reinstall/console/hostname/rDNS, not billing). Owner-only. |
+| `accept_delegation` | public | Accept a delegation invite using the `token` from the invite link. Returns a Bearer token. |
+| `list_delegations` | bearer | List outgoing delegations you granted. |
+| `list_delegated_to_me` | bearer | List services other owners delegated to you. |
+| `revoke_delegation` | bearer | Revoke a delegation by id. |
+| `create_ticket` | bearer | Open a support ticket. |
+| `list_tickets` | bearer | List your support tickets and their status. |
+| `get_ticket` | bearer | Read a ticket with its full message thread. |
+| `reply_ticket` | bearer | Post a reply on one of your tickets. |
+| `close_ticket` | bearer | Close a resolved ticket (optional rating). |
+
+### Reseller tools (25) — white-label
+
+For partners building their own VPS brand on top of EQVPS (own plans, own end-clients, own pricing). Requires a reseller token (`rk_…`) from the [EQVPS Partners](https://eqvps.com/partners) cabinet. An agent can run a hosting business autonomously:
+
+`reseller_check_balance`, `reseller_list_plans`, `reseller_create_plan`, `reseller_edit_plan`, `reseller_archive_plan`, `reseller_restore_plan`, `reseller_list_clients`, `reseller_add_client`, `reseller_edit_client`, `reseller_suspend_client`, `reseller_unsuspend_client`, `reseller_order_for_client`, `reseller_list_vms`, `reseller_vm_details`, `reseller_vm_status` (`reseller_service_status`), `reseller_vm_power`, `reseller_vm_set_hostname`, `reseller_vm_reset_password`, `reseller_vm_metrics`, `reseller_vm_cancel`, `reseller_create_ticket`, `reseller_list_tickets`, `reseller_get_ticket`, `reseller_reply_ticket`, `reseller_close_ticket`.
 
 ## Typical agent flow
 
@@ -102,7 +121,7 @@ Point `EQVPS_MCP_URL` at a different endpoint if needed. The example uses only t
 
 ## About
 
-EQVPS is API-native, pay-per-use VPS hosting for humans **and** AI agents. NVMe storage, full root, instant deploy, EU nodes. Crypto payment (USDC/USDT on Base, Ethereum and Polygon), no KYC. Registered in the [Official MCP Registry](https://registry.modelcontextprotocol.io) as `io.github.Poiuyhje/eqvps`.
+EQVPS is API-native, pay-per-use VPS hosting for humans **and** AI agents — with one of the most comprehensive MCP surfaces of any VPS provider (**52 tools**). NVMe storage, full root, instant deploy (~60s), 14 Linux images, EU nodes (Germany, Finland). Crypto payment — USDC, USDT and PYUSD on Base, Ethereum, Polygon and Solana — no KYC, no card required. Registered in the [Official MCP Registry](https://registry.modelcontextprotocol.io) as `io.github.Poiuyhje/eqvps`.
 
 ## License
 
