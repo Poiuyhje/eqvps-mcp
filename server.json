@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Poiuyhje/eqvps",
-  "description": "No-KYC crypto VPS AI agents rent & run over MCP — 54 tools, pay USDC/USDT on Base/Eth/Polygon/Solana",
-  "version": "1.0.7",
+  "description": "No-KYC crypto VPS AI agents rent & run over MCP — 55 tools, pay USDC/USDT on Base/Eth/Polygon/Solana",
+  "version": "1.0.8",
   "repository": {
     "url": "https://github.com/Poiuyhje/eqvps-mcp",
     "source": "github"
