@@ -1,9 +1,24 @@
+<p align="center">
+  <img alt="MCP" src="https://img.shields.io/badge/MCP-live-brightgreen">
+  <img alt="Tools" src="https://img.shields.io/badge/tools-57-blue">
+  <img alt="Site" src="https://img.shields.io/badge/site-19_languages-blueviolet">
+  <img alt="Pay" src="https://img.shields.io/badge/pay-USDC%2FUSDT%2FPYUSD-orange">
+  <img alt="KYC" src="https://img.shields.io/badge/KYC-none-lightgrey">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-green">
+</p>
+
 # EQVPS — MCP Server
 
 **API-native, pay-per-use, no-KYC VPS hosting that AI agents can rent and run by themselves.** EQVPS exposes a [Model Context Protocol](https://modelcontextprotocol.io) server so an autonomous agent can discover plans, create an account, pay with crypto, order a VPS, and fully operate it — **no human in the loop, agents provision programmatically.**
 
+> ⭐ **If this is useful, please star the repo** — it helps other agents & devs discover it.
+
 - 🌐 **Website:** https://eqvps.com
-- 📚 **Docs (REST + MCP):** https://eqvps.com/docs
+- 📚 **Docs (REST + MCP):** https://eqvps.com/en/docs
+- 🧩 **MCP tools reference:** https://eqvps.com/en/blog/eqvps-mcp-tools-reference
+- 🔌 **Connect your MCP client:** https://eqvps.com/en/blog/connect-eqvps-mcp-client
+- 🤖 **API & agent landing:** https://eqvps.com/en/api
+- 📇 **agent.json:** https://eqvps.com/.well-known/agent.json · **llms.txt:** https://eqvps.com/llms.txt
 - 🔌 **MCP endpoint:** `https://mcp.eqvps.com/mcp` (transport: **streamable-http**)
 - 💸 **Payment:** crypto only — **USDC, USDT, PYUSD** (plus native **ETH, POL, SOL, CBBTC**) on **Base**, **Ethereum**, **Polygon** and **Solana** (prepaid balance, non-custodial gateway). **No KYC.**
 - 🧰 **57 MCP tools** on one endpoint, role-filtered by token: **27 for customers** + **30 for white-label resellers**.
