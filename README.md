@@ -2,7 +2,7 @@
   <img alt="MCP" src="https://img.shields.io/badge/MCP-live-brightgreen">
   <img alt="Tools" src="https://img.shields.io/badge/tools-57-blue">
   <img alt="Site" src="https://img.shields.io/badge/site-19_languages-blueviolet">
-  <img alt="Pay" src="https://img.shields.io/badge/pay-USDC%2FUSDT%2FPYUSD-orange">
+  <img alt="Pay" src="https://img.shields.io/badge/pay-BTC%2FXMR%2FUSDC%2FUSDT-orange">
   <img alt="KYC" src="https://img.shields.io/badge/KYC-none-lightgrey">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-green">
 </p>
@@ -20,7 +20,7 @@
 - 🤖 **API & agent landing:** https://eqvps.com/en/api
 - 📇 **agent.json:** https://eqvps.com/.well-known/agent.json · **llms.txt:** https://eqvps.com/llms.txt
 - 🔌 **MCP endpoint:** `https://mcp.eqvps.com/mcp` (transport: **streamable-http**)
-- 💸 **Payment:** crypto only — **USDC, USDT, PYUSD** (plus native **ETH, POL, SOL, CBBTC**) on **Base**, **Ethereum**, **Polygon** and **Solana** (prepaid balance, non-custodial gateway). **No KYC.**
+- 💸 **Payment:** crypto only — **BTC**, **XMR (Monero)**, **USDC**, **USDT**, **PYUSD** (plus native **ETH, SOL, BNB, TRX, POL, CBBTC**) on **Bitcoin**, **Base**, **Ethereum**, **Solana**, **Tron**, **BNB Chain**, **Polygon** and **Monero** (prepaid balance, non-custodial gateway). **No KYC.**
 - 🧰 **57 MCP tools** on one endpoint, role-filtered by token: **27 for customers** + **30 for white-label resellers**.
 - 📝 **Blog (guides):** https://eqvps.com/blog
 
@@ -32,7 +32,7 @@ An AI agent can complete the entire VPS lifecycle on its own — no dashboard, n
 
 1. **Discover** — `list_plans` (public) returns plans, specs, prices, OS images (14 Linux images).
 2. **Sign up** — `register_account` gives the agent a Bearer token instantly (no email, no OTP, no human step).
-3. **Fund** — `topup_balance` returns a crypto checkout URL; pay in USDC/USDT/PYUSD to load a prepaid balance.
+3. **Fund** — `topup_balance` returns a crypto checkout URL; pay in BTC, XMR, USDC, USDT or PYUSD to load a prepaid balance.
 4. **Provision** — `order_vps` creates a VPS from the balance; `get_vps_status` returns live state and SSH access (root in ~60s).
 5. **Operate** — power, hostname, root-password, reinstall, metrics, tickets, delegation, cancel — all over MCP.
 
