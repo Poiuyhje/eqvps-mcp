@@ -2,7 +2,7 @@
   "schemaVersion": "2025-06-draft",
   "name": "eqvps",
   "title": "EQVPS",
-  "description": "Crypto-paid, no-KYC VPS hosting that AI agents can rent and operate end-to-end over MCP: discover plans, create an account, top up with USDC/USDT, order a VPS, then control it (power, hostname, reinstall, metrics).",
+  "description": "Crypto-paid, no-KYC VPS hosting that AI agents can rent and operate end-to-end over MCP: discover plans, create an account, top up with BTC/XMR/USDC/USDT, order a VPS, then control it (power, hostname, reinstall, metrics).",
   "version": "1.0.0",
   "vendor": {
     "name": "EQVPS",
@@ -100,7 +100,7 @@
   ],
   "x-eqvps": {
     "restApi": "https://api.eqvps.com/api/v1/eqvps",
-    "payment": "crypto USDC & USDT on Base and Ethereum, via PayRam — no KYC",
+    "payment": "crypto: BTC, XMR, USDC, USDT, PYUSD and more on Bitcoin, Base, Ethereum, Solana, Tron, BNB Chain, Polygon, Monero, via PayRam — no KYC",
     "humanUi": "https://eqvps.com",
     "noKyc": true
   }
