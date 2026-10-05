@@ -1,20 +1,42 @@
 {
   "name": "eqvps-mcp",
   "version": "1.0.3",
-  "description": "EQVPS MCP — no-KYC crypto-paid VPS that AI agents rent & operate over the Model Context Protocol. Hosted remote server (mcp.eqvps.com); this package documents the interface and ships an example client.",
+  "description": "EQVPS MCP — no-KYC VPS and per-second code sandboxes that AI agents rent & operate over the Model Context Protocol. Hosted remote server (mcp.eqvps.com); this package documents the interface and ships an example client.",
   "type": "module",
   "main": "examples/connect.mjs",
   "scripts": {
     "start": "node examples/connect.mjs",
     "example": "node examples/connect.mjs"
   },
-  "keywords": ["mcp", "model-context-protocol", "vps", "hosting", "ai-agents", "no-kyc", "crypto", "usdc", "usdt", "devops", "cloud"],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "vps",
+    "hosting",
+    "ai-agents",
+    "no-kyc",
+    "crypto",
+    "usdc",
+    "usdt",
+    "devops",
+    "cloud",
+    "sandbox",
+    "code-sandbox",
+    "firecracker"
+  ],
   "author": "EQVPS <info@eqvps.com> (https://eqvps.com)",
   "license": "MIT",
   "homepage": "https://eqvps.com",
-  "repository": { "type": "git", "url": "git+https://github.com/Poiuyhje/eqvps-mcp.git" },
-  "bugs": { "url": "https://github.com/Poiuyhje/eqvps-mcp/issues" },
-  "engines": { "node": ">=18" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Poiuyhje/eqvps-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Poiuyhje/eqvps-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0"
   }
