@@ -2,8 +2,8 @@
   "schemaVersion": "2025-06-draft",
   "name": "eqvps",
   "title": "EQVPS",
-  "description": "Crypto-paid, no-KYC VPS hosting that AI agents can rent and operate end-to-end over MCP: discover plans, create an account, top up with BTC/XMR/USDC/USDT, order a VPS, then control it (power, hostname, reinstall, metrics).",
-  "version": "1.0.0",
+  "description": "VPS and code sandboxes that AI agents rent and operate over MCP: order and manage VPS; start Firecracker sandboxes, run code, move files — billed per second from one prepaid balance.",
+  "version": "1.6.0",
   "vendor": {
     "name": "EQVPS",
     "url": "https://eqvps.com"
@@ -13,15 +13,21 @@
   "transport": "streamable-http",
   "authentication": {
     "type": "http-bearer",
-    "description": "AI AGENTS (this MCP): call the register_account tool — the agent supplies its own credentials and receives a Bearer token immediately (no email, no OTP code, no human step). Send it as Authorization: Bearer <token>. Do NOT use the website email-OTP flow; that path is for humans in a browser only and an agent cannot complete it (cannot read email). Catalog tools (list_plans) are public.",
+    "description": "AI AGENTS (this MCP): call the register_account tool (token valid 1 year by default; refresh_token renews it) — the agent supplies its own credentials and receives a Bearer token immediately (no email, no OTP code, no human step). Send it as Authorization: Bearer <token>. Do NOT use the website email-OTP flow; that path is for humans in a browser only and an agent cannot complete it (cannot read email). Catalog tools (list_plans) are public.",
     "tokenAcquisition": "tool:register_account (agents get a Bearer token instantly — NOT the human email-OTP flow)",
     "x-agentAuth": "register_account tool -> Bearer token, immediate, no email/OTP/human step",
     "x-humanAuth": "website eqvps.com only: passwordless email OTP code, not usable by agents"
   },
   "capabilities": {
-    "tools": true
+    "tools": true,
+    "prompts": true
   },
   "tools": [
+    {
+      "name": "get_started",
+      "description": "Start here: the whole flow (VPS + sandbox) with example arguments, the only human step, common errors with fixes, and your current state.",
+      "requiresAuth": false
+    },
     {
       "name": "list_plans",
       "description": "List available VPS plans with pricing, specs and OS images.",
@@ -29,13 +35,23 @@
     },
     {
       "name": "register_account",
-      "description": "Create an EQVPS account (no human/KYC step). Returns a Bearer token.",
+      "description": "Create an EQVPS account (programmatic signup, no human in the loop). Returns a Bearer token.",
       "requiresAuth": false
     },
     {
       "name": "login",
       "description": "Log in with email + password; returns a Bearer token.",
       "requiresAuth": false
+    },
+    {
+      "name": "refresh_token",
+      "description": "Exchange the current API token for a new one before it expires (the old one is revoked).",
+      "requiresAuth": true
+    },
+    {
+      "name": "set_password",
+      "description": "Set a password for this account once, to enable email+password login as a recovery method.",
+      "requiresAuth": true
     },
     {
       "name": "whoami",
@@ -59,7 +75,7 @@
     },
     {
       "name": "pay_invoice",
-      "description": "Initiate crypto payment for an owned unpaid invoice; returns checkout URL.",
+      "description": "Initiate crypto payment for an owned unpaid invoice (invoice_id as returned, e.g. \"2RUAWV4\"); returns checkout URL.",
       "requiresAuth": true
     },
     {
@@ -69,7 +85,7 @@
     },
     {
       "name": "get_vps_status",
-      "description": "Full detail for one VPS: status, specs, live VM state/uptime, SSH access.",
+      "description": "Full detail for one VPS: status, specs, live VM state/uptime, SSH/RDP access.",
       "requiresAuth": true
     },
     {
@@ -96,12 +112,161 @@
       "name": "get_vps_metrics",
       "description": "Time-series resource metrics (CPU, memory, network, disk) for a VPS.",
       "requiresAuth": true
+    },
+    {
+      "name": "undo_cancel",
+      "description": "Undo a scheduled end_of_period cancellation — the VPS stays active and renews.",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_upgrade_options",
+      "description": "Plans this VPS can switch to in place (resize / convert), with the prorated charge.",
+      "requiresAuth": true
+    },
+    {
+      "name": "change_plan",
+      "description": "Change the VPS plan in place (resize or NAT↔dedicated convert); data kept, one reboot; prorated charge from the balance.",
+      "requiresAuth": true
+    },
+    {
+      "name": "cancel_service",
+      "description": "Cancel a VPS. Default end_of_period (lives out paid term, no data loss); immediate wipes the VM+data NOW (needs confirm=hostname) and refunds unused paid days to your balance.",
+      "requiresAuth": true
+    },
+    {
+      "name": "delegate_service",
+      "description": "Grant operator access to one of your VPS to another person by email.",
+      "requiresAuth": true
+    },
+    {
+      "name": "accept_delegation",
+      "description": "Accept a delegation invitation (token from the invite link).",
+      "requiresAuth": true
+    },
+    {
+      "name": "list_delegations",
+      "description": "List delegations you granted on your services.",
+      "requiresAuth": true
+    },
+    {
+      "name": "list_delegated_to_me",
+      "description": "List services other owners delegated to you.",
+      "requiresAuth": true
+    },
+    {
+      "name": "revoke_delegation",
+      "description": "Revoke (or decline) a delegation by id.",
+      "requiresAuth": true
+    },
+    {
+      "name": "create_ticket",
+      "description": "Open a support ticket (subject, message, optional service_id).",
+      "requiresAuth": true
+    },
+    {
+      "name": "list_tickets",
+      "description": "List your support tickets with status.",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_ticket",
+      "description": "Read a ticket and its full message thread (author: you/staff).",
+      "requiresAuth": true
+    },
+    {
+      "name": "reply_ticket",
+      "description": "Reply to one of your tickets.",
+      "requiresAuth": true
+    },
+    {
+      "name": "close_ticket",
+      "description": "Close a ticket; rating (1-5) and comment optional.",
+      "requiresAuth": true
+    },
+    {
+      "name": "sandbox_pricing",
+      "description": "Public: sandbox tariffs — micro 0.25 vCPU/512 MB RAM/3 GB disk · small 0.5 vCPU/1 GB RAM/5 GB disk · standard 1 vCPU/2 GB RAM/10 GB disk · plus 2 vCPU/4 GB RAM/15 GB disk · pro 4 vCPU/8 GB RAM/20 GB disk · max 8 vCPU/16 GB RAM/40 GB disk — with per-second/hour/month prices, the billing model and limits (synchronous exec up to 55 s, background tasks longer; files up to 5 MB per transfer; runtimes: Python 3.12 + pip, Node.js 22 + npm, bash, git, curl). No authentication needed. Writing code instead of calling MCP? Official SDKs on the same REST API and token: Python `pip install eqvps`, TypeScript/JavaScript `npm i @eqvps/sdk` (docs: https://eqvps.com/en/docs/sandboxes). Requires: nothing.",
+      "requiresAuth": false
+    },
+    {
+      "name": "create_sandbox",
+      "description": "Start an isolated Firecracker microVM sandbox (ephemeral per-second or persistent hourly), billed from the prepaid balance.",
+      "requiresAuth": true
+    },
+    {
+      "name": "run_code",
+      "description": "Run Python, Node.js or bash code in a sandbox; returns exit code, stdout, stderr (background: true for long jobs).",
+      "requiresAuth": true
+    },
+    {
+      "name": "exec_command",
+      "description": "Execute a shell command in a sandbox (background: true for jobs longer than 55 s).",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_task",
+      "description": "Poll a background task: state, exit code and new output since the given offsets.",
+      "requiresAuth": true
+    },
+    {
+      "name": "kill_task",
+      "description": "Stop a background task.",
+      "requiresAuth": true
+    },
+    {
+      "name": "upload_file",
+      "description": "Write a file (text or base64, up to 5 MB) into a sandbox.",
+      "requiresAuth": true
+    },
+    {
+      "name": "download_file",
+      "description": "Read a small file (up to 5 MB) from a sandbox into the conversation.",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_download_url",
+      "description": "Short-lived link to stream one sandbox file (up to 2 GB) — no base64 in context.",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_upload_url",
+      "description": "Short-lived link to PUT one file into a sandbox (up to 2 GB, 95 MB per request with offset).",
+      "requiresAuth": true
+    },
+    {
+      "name": "list_sandboxes",
+      "description": "List the account's sandboxes (running and paused).",
+      "requiresAuth": true
+    },
+    {
+      "name": "get_sandbox",
+      "description": "Sandbox status plus usage and cost so far.",
+      "requiresAuth": true
+    },
+    {
+      "name": "kill_sandbox",
+      "description": "Delete a sandbox immediately and irreversibly (all data lost); billing stops.",
+      "requiresAuth": true
     }
   ],
+  "prompts": [
+    {
+      "name": "rent_vps",
+      "description": "Step-by-step: account → crypto top-up (one human payment) → order → wait for SSH → connect."
+    },
+    {
+      "name": "run_code_in_sandbox",
+      "description": "Create a sandbox, install packages, run code (background for long jobs), clean up."
+    },
+    {
+      "name": "fix_ssh_access",
+      "description": "Diagnose 'connection refused' / 'permission denied' on a VPS without breaking it."
+    }
+  ],
+  "x-guidance": "Every tool response carries next_steps; every error carries error.code, error.fix and error.next. Start with the get_started tool.",
   "x-eqvps": {
     "restApi": "https://api.eqvps.com/api/v1/eqvps",
-    "payment": "crypto: BTC, XMR, USDC, USDT, PYUSD and more on Bitcoin, Base, Ethereum, Solana, Tron, BNB Chain, Polygon, Monero, via PayRam — no KYC",
-    "humanUi": "https://eqvps.com",
-    "noKyc": true
+    "payment": "crypto USDC/USDT on Base, Ethereum and Polygon, via PayRam",
+    "humanUi": "https://eqvps.com"
   }
 }
