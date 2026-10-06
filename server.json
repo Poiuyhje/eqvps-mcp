@@ -3,7 +3,7 @@
   "name": "io.github.Poiuyhje/eqvps",
   "title": "EQVPS — VPS and code sandboxes for AI agents",
   "description": "No-KYC VPS + per-second code sandboxes AI agents run over MCP — 75 tools, SDK, pay BTC/XMR/USDC/USDT",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "repository": {
     "url": "https://github.com/Poiuyhje/eqvps-mcp",
     "source": "github"
